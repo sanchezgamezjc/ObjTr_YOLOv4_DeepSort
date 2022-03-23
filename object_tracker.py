@@ -225,7 +225,7 @@ def main(_argv):
             if FLAGS.info:
                 print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
         
-        tracking_data = {frame:tracking_frame}
+        tracking_data = {frame_num:tracking_frame}
 
         # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)
