@@ -218,14 +218,14 @@ def main(_argv):
             image = cv2.circle(frame, (int(bbox[2])-int(bbox[0]),int(bbox[1])), radius=0, color=(0, 0, 255), thickness=-1)
             cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
 
-            tracking_id = {'x':(int(bbox[2])-int(bbox[0])), 'y': int(bbox[1])} 
-            tracking_frame = {track.track_id : tracking_id}
+            
+            tracking_frame[track.track_id] = {'x':(int(bbox[2])-int(bbox[0])), 'y': int(bbox[1])} 
 
         # if enable info flag then print details about each track
             if FLAGS.info:
                 print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
         
-        tracking_data = {frame_num:tracking_frame}
+        tracking_data[frame_num] = tracking_frame
 
         # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)
