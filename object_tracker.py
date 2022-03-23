@@ -43,6 +43,7 @@ def main(_argv):
     max_cosine_distance = 0.4
     nn_budget = None
     nms_max_overlap = 1.0
+    tracking_data = {}
     
     # initialize deep sort
     model_filename = 'model_data/mars-small128.pb'
@@ -94,6 +95,7 @@ def main(_argv):
     # while video is running
     while True:
         return_value, frame = vid.read()
+        tracking_frame = {}
         if return_value:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image = Image.fromarray(frame)
@@ -202,6 +204,7 @@ def main(_argv):
 
         # update tracks
         for track in tracker.tracks:
+            tracking_id = {}
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue 
             bbox = track.to_tlbr()
@@ -212,11 +215,17 @@ def main(_argv):
             color = [i * 255 for i in color]
             cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
             cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
+            image = cv2.circle(frame, (int(bbox[2])-int(bbox[0]),int(bbox[1])), radius=0, color=(0, 0, 255), thickness=-1)
             cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
+
+            tracking_id = {'x':(int(bbox[2])-int(bbox[0])), 'y': int(bbox[1])} 
+            tracking_frame = {track.track_id : tracking_id}
 
         # if enable info flag then print details about each track
             if FLAGS.info:
                 print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
+        
+        tracking_data = {frame:tracking_frame}
 
         # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)
@@ -233,7 +242,7 @@ def main(_argv):
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     cv2.destroyAllWindows()
 
-    print(track)
+    print(tracking_data)
 
 if __name__ == '__main__':
     try:
