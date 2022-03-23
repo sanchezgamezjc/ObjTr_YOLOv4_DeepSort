@@ -233,7 +233,7 @@ def main(_argv):
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     cv2.destroyAllWindows()
 
-    return(track)
+    print(track)
 
 if __name__ == '__main__':
     try:
