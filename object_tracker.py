@@ -218,9 +218,9 @@ def main(_argv):
             cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
             image = cv2.circle(frame, (int(bbox[2])-int(bbox[0]),int(bbox[1])), radius=1, color=(0, 0, 255), thickness=-1)
             
-            x = int(int(bbox[0])) + ((int(bbox[2])-int(bbox[0])) / 2)
-            y = int(bbox[1])
-            cv2.circle(frame, (x, y), radius=1, color=(0, 0, 255), thickness=-1)
+            x_dot = int(bbox[0])
+            y_dot = int(bbox[1])
+            cv2.circle(frame, (x_dot, y_dot), radius=1, color=(0, 0, 255), thickness=-1)
 
             cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
 
