@@ -219,7 +219,7 @@ def main(_argv):
             image = cv2.circle(frame, (int(bbox[2])-int(bbox[0]),int(bbox[1])), radius=1, color=(0, 0, 255), thickness=-1)
             
             x_dot = int(bbox[0])
-            y_dot = int(bbox[1])
+            y_dot = int(bbox[3])
             cv2.circle(frame, (x_dot, y_dot), radius=10, color=(0, 0, 255), thickness=-1)
 
             cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
