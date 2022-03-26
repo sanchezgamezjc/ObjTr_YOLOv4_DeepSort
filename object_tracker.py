@@ -220,12 +220,12 @@ def main(_argv):
             
             x_dot = int(bbox[0])
             y_dot = int(bbox[1])
-            cv2.circle(frame, (x_dot, y_dot), radius=1, color=(0, 0, 255), thickness=-1)
+            cv2.circle(frame, (x_dot, y_dot), radius=10, color=(0, 0, 255), thickness=-1)
 
             cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
 
             
-            tracking_frame[track.track_id] = {'x':(int(bbox[0])) + ((int(bbox[2])-int(bbox[0])) / 2), 'y': int(bbox[1])} 
+            tracking_frame[track.track_id] = {'x':(int(bbox[0])) + ((int(bbox[2])-int(bbox[0])) / 2), 'y': int(bbox[3])} 
 
         # if enable info flag then print details about each track
             if FLAGS.info:
