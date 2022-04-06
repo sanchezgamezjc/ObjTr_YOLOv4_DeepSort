@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\core",
+    "\\data",
+    "\\data\\classes"
   ],
   "SelectedNode": "\\object_tracker.py",
   "PreviewInSolutionExplorer": false
